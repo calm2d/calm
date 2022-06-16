@@ -40,7 +40,7 @@
   (c:move-to 430 380)
   (c:curve-to 470 460 350 420 280 360)
   (c:stroke)
-  
+
   (c:new-path)
   (c:set-source-rgb (/ 210 255) (/ 0 255) (/ 22 255))
   (c:set-line-width 2)
@@ -49,5 +49,11 @@
       (progn (c:fill-path) (u:set-cursor :hand)
              (when *cross-legged-mousebutton-is-up*
                (setf *cross-legged-mousebutton-is-up* nil)
-               (u:play-wav "bowl.wav")))
+               (u:play-wav "bowl.wav"))
+             (c:arc 370 105 5 (* 1.7 pi) (* 0.3 pi))
+             (c:stroke)
+             (c:arc 375 105 10 (* 1.7 pi) (* 0.3 pi))
+             (c:stroke)
+             (c:arc 380 105 15 (* 1.7 pi) (* 0.3 pi))
+             (c:stroke))
       (progn (c:stroke) (u:set-cursor :arrow))))
