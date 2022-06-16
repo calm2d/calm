@@ -88,11 +88,7 @@
                            (redraw))
            (:idle ()
                   (when (or *calm-drawing* (draw?))
-                    (format t
-                            "REDRAWING ... ~A CLC: ~A, DRAW?: ~A~%"
-                            (sdl2:get-ticks)
-                            *calm-drawing*
-                            (draw?))
+                    (format t "Canvas Redraw, SDL Tick: ... ~A.~%" (sdl2:get-ticks))
                     (setf *calm-drawing* nil)
                     (multiple-value-bind (*calm-renderer-width* *calm-renderer-height*)
                         (sdl2:get-renderer-output-size *calm-renderer*)
@@ -201,7 +197,7 @@
   (defun draw ()
     (c:set-source-rgb 1 1 1)
     (c:paint)
-    (c:set-source-rgb 0.8 0.15 0.5)
+    (c:set-source-rgb (/ 12 255) (/ 55 255) (/ 132 255))
     (c:move-to 20 180)
     (c:set-font-size 120)
     (c:show-text "DON'T PANIC")
@@ -230,6 +226,22 @@
   ;; draw
   (with-canvas ()
     (draw)))
+
+;; ==========================
+;; utils
+;; ==========================
+(in-package #:calm-utils)
+
+(defun set-cursor (type)
+  (cond
+    ((equal type :hand) (sdl2-ffi.functions:sdl-set-cursor (sdl2-ffi.functions:sdl-create-system-cursor sdl2-ffi:+sdl-system-cursor-hand+)))
+    ((equal type :arrow) (sdl2-ffi.functions:sdl-set-cursor (sdl2-ffi.functions:sdl-create-system-cursor sdl2-ffi:+sdl-system-cursor-arrow+)))))
+
+(sdl2-mixer:init)
+(defun play-wav (pathname)
+  (sdl2-mixer:open-audio sdl2-ffi:+mix-default-frequency+ sdl2-ffi:+mix-default-format+ 2 4096)
+  (sdl2-mixer:play-channel -1 (sdl2-mixer:load-wav pathname) 0))
+
 
 #+linux (calm::load-canvas)
 #+(or win32 darwin) (sdl2:make-this-thread-main #'calm::load-canvas)

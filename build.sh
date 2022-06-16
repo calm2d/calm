@@ -26,6 +26,13 @@ dump_calm_bin () {
          --eval "(asdf:make :calm)"
 }
 
+copy_resource () {
+    # collect the lisp files
+    cp ../../src/core.lisp .
+    # copy default gallery
+    cp r ../../gallery .
+}
+
 test_calm_bin () {
     # collect the binary
     mv ../../src/calm ./calm-bin
@@ -77,8 +84,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     LD_LIBRARY_PATH=./ dump_calm_bin
 
-    # collect the lisp files
-    cp ../../src/core.lisp .
+    copy_resource
 
     # collect the launcher
     cp ../../calm.sh calm
@@ -86,7 +92,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     test_calm_bin
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    # Mac OSX
+    # macOS
     if ! command -v brew &> /dev/null
     then
         echo "Homebrew could not be found, Installing Homebrew ..."
@@ -152,8 +158,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
     dump_calm_bin
 
-    # collect the lisp files
-    cp ../../src/core.lisp .
+    copy_resource
 
     # collect the launcher
     cp ../../calm.sh calm
@@ -201,8 +206,7 @@ elif [[ "$OSTYPE" == "msys" ]]; then
 
     dump_calm_bin
 
-    # collect the lisp files
-    cp ../../src/core.lisp .
+    copy_resource
 
     test_calm_bin
 
