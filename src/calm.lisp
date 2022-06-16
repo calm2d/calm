@@ -1,5 +1,7 @@
 (in-package #:calm)
 
+(defvar *calm-version* (uiop:run-program "git describe --always --tags" :output '(:string :stripped t)))
+
 (defun entry ()
   (let ((core-path sb-ext:*core-pathname*)
         (cwd-path (uiop:getcwd)))

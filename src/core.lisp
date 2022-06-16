@@ -7,8 +7,6 @@
 
 (in-package #:calm)
 
-(defvar *calm-version* (uiop:run-program "git describe --always --tags" :output '(:string :stripped t)))
-
 (defparameter *calm-drawing* t)
 
 (defparameter *calm-width* 600)
