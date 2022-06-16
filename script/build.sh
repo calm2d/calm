@@ -30,7 +30,7 @@ copy_resource () {
     # collect the lisp files
     cp ../../src/core.lisp .
     # copy default gallery
-    cp -r ../../gallery .
+    cp -r ../../src/gallery .
 }
 
 test_calm_bin () {
