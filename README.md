@@ -9,6 +9,6 @@
 
 ```bash
 export PATH="~/Downloads/calm/:$PATH"
-cd ~/Downloads/calm/gallery/cross-legged/
+cd ~/Downloads/calm/gallery/meditator/
 calm
 ```
