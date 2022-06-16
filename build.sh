@@ -53,9 +53,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     echo "Installing dependencies ..."
     if [[ "$DISTRO" == "Ubuntu"* ]]; then
-        sudo apt install libsdl2-2.0-0 libsdl2-mixer-2.0-0  libcairo2 -y
+        sudo apt install git libsdl2-2.0-0 libsdl2-mixer-2.0-0  libcairo2 -y
     elif [[ "$DISTRO" == "Fedora"* ]]; then
-        sudo dnf install SDL2 SDL2_mixer cairo -y
+        sudo dnf install git SDL2 SDL2_mixer cairo -y
     else
         echo "Unsupported DISTRO. Please install dependencies by yourself and modify this script."
         exit 42
@@ -93,7 +93,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     echo "Installing dependencies ..."
-    brew install coreutils sdl2 sdl2_mixer cairo
+    brew install git coreutils sdl2 sdl2_mixer cairo
 
     # link them, in case of they were unlinked before
     brew link sdl2 sdl2_mixer cairo
@@ -169,7 +169,8 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
 elif [[ "$OSTYPE" == "msys" ]]; then
     # Windows / MSYS2
     echo "Installing dependencies ..."
-    pacman -S --noconfirm --needed mingw64/mingw-w64-x86_64-gcc \
+    pacman -S --noconfirm --needed git \
+           mingw64/mingw-w64-x86_64-gcc \
            mingw64/mingw-w64-x86_64-pkgconf \
            mingw64/mingw-w64-x86_64-SDL2 \
            mingw64/mingw-w64-x86_64-SDL2_mixer \
