@@ -26,8 +26,8 @@ jobs:
 
       - name: Build CALM
         run: |
-          chmod +x build.sh
-          ./build.sh
+          chmod +x ./script/build.sh
+          ./script/build.sh
           7z a -t7z -mx=9 -mfb=273 -ms -md=32m -myx=9 -mtm=- -mmt -mmtf -mmf=bt3 -mmc=10000 -mpb=0 -mlc=0 calm-lnx.7z ./build/calm/
           ls -lah .
       - name: GH Release
@@ -49,8 +49,8 @@ jobs:
 
       - name: Build CALM
         run: |
-          chmod +x build.sh
-          ./build.sh
+          chmod +x ./script/build.sh
+          ./script/build.sh
           7z a -t7z -mx=9 -mfb=273 -ms -md=32m -myx=9 -mtm=- -mmt -mmtf -mmf=bt3 -mmc=10000 -mpb=0 -mlc=0 calm-mac.7z ./build/calm/
           ls -lah .
       - name: GH Release
@@ -81,8 +81,8 @@ jobs:
       - name: Build CALM
         shell: msys2 {0}
         run: |
-          chmod +x build.sh
-          ./build.sh
+          chmod +x ./script/build.sh
+          ./script/build.sh
           7z a -t7z -mx=9 -mfb=273 -ms -md=32m -myx=9 -mtm=- -mmt -mmtf -mmf=bt3 -mmc=10000 -mpb=0 -mlc=0 calm-win.7z ./build/calm/
           ls -lah .
       - name: GH Release

@@ -87,7 +87,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     copy_resource
 
     # collect the launcher
-    cp ../../calm.sh calm
+    cp ../../script/calm.sh calm
 
     test_calm_bin
 
@@ -161,7 +161,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     copy_resource
 
     # collect the launcher
-    cp ../../calm.sh calm
+    cp ../../script/calm.sh calm
 
     test_calm_bin
 
