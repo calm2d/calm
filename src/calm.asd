@@ -13,7 +13,7 @@
                #:str
                #:swank
                #:cl-cairo2)
-  :pathname "src"
+  :pathname "./"
   :serial t
   :components ((:file "package")
                (:file "calm"))

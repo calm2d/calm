@@ -21,7 +21,7 @@ install_quicklisp () {
 dump_calm_bin () {
     echo "Dumping the CALM binary ..."
     sbcl --disable-debugger \
-         --load ../../calm.asd \
+         --load ../../src/calm.asd \
          --eval "(ql:quickload 'calm)" \
          --eval "(asdf:make :calm)"
 }
