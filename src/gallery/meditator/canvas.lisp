@@ -4,6 +4,10 @@
 
 (defparameter *meditator-mousebutton-is-up* nil)
 
+(defun on-mousemotion (&key button x y)
+  (declare (ignore x y))
+  (redraw))
+
 (defun on-mousebuttonup (&key button x y clicks)
   (declare (ignore button x y clicks))
   (setf *meditator-mousebutton-is-up* t))
