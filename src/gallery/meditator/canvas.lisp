@@ -2,11 +2,11 @@
 
 (swank:create-server :port 4242)
 
-(defparameter *cross-legged-mousebutton-is-up* nil)
+(defparameter *meditator-mousebutton-is-up* nil)
 
 (defun on-mousebuttonup (&key button x y clicks)
   (declare (ignore button x y clicks))
-  (setf *cross-legged-mousebutton-is-up* t))
+  (setf *meditator-mousebutton-is-up* t))
 
 (defun draw ()
   (c:set-source-rgb (/ 12 255) (/ 55 255) (/ 132 255))
@@ -47,9 +47,9 @@
   (c:arc 550 50 15 0 (* 2 pi))
   (if (c:in-fill *calm-mouse-x* *calm-mouse-y*)
       (progn (c:fill-path) (u:set-cursor :hand)
-             (when *cross-legged-mousebutton-is-up*
-               (setf *cross-legged-mousebutton-is-up* nil)
-               (u:play-wav "bowl.wav"))
+             (when *meditator-mousebutton-is-up*
+               (setf *meditator-mousebutton-is-up* nil)
+               (u:mix-play "bowl.wav"))
              (c:arc 370 105 5 (* 1.7 pi) (* 0.3 pi))
              (c:stroke)
              (c:arc 375 105 10 (* 1.7 pi) (* 0.3 pi))

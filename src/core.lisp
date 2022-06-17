@@ -9,6 +9,8 @@
 
 (defparameter *calm-drawing* t)
 
+(defparameter *calm-debuging* nil)
+(defparameter *calm-frame-delay* 15)
 (defparameter *calm-width* 600)
 (defparameter *calm-height* 500)
 (defparameter *calm-title* "CALM")
@@ -77,7 +79,8 @@
                          ;; (format t "Mouse Motion EVENT: X:~A Y:~A ~%" x y)
                          (setf *calm-mouse-x* x
                                *calm-mouse-y* y)
-                         (redraw))
+                         ;; (redraw)
+                         )
            (:mousebuttonup (:button button :x x :y y :clicks clicks)
                            ;; (format t "Mouse Button EVENT: ~A ~%" button)
                            (on-mousebuttonup :button button :x x :y y :clicks clicks)
@@ -88,7 +91,8 @@
                            (redraw))
            (:idle ()
                   (when (or *calm-drawing* (draw?))
-                    (format t "Canvas Redraw, SDL Tick: ... ~A.~%" (sdl2:get-ticks))
+                    (when *calm-debuging*
+                      (format t "Canvas Redraw, SDL Tick: ... ~A.~%" (sdl2:get-ticks)))
                     (setf *calm-drawing* nil)
                     (multiple-value-bind (*calm-renderer-width* *calm-renderer-height*)
                         (sdl2:get-renderer-output-size *calm-renderer*)
@@ -98,7 +102,8 @@
                           (with-cairo (texture)
                             ,@body))
                         (sdl2:render-present *calm-renderer*)))
-                  (sdl2:delay 42)
+                  (when *calm-frame-delay*
+                    (sdl2:delay *calm-frame-delay*))
                   ))))))
 
 (defmacro with-texture ((texture-sym) &body body)
@@ -238,9 +243,17 @@
     ((equal type :arrow) (sdl2-ffi.functions:sdl-set-cursor (sdl2-ffi.functions:sdl-create-system-cursor sdl2-ffi:+sdl-system-cursor-arrow+)))))
 
 (sdl2-mixer:init)
-(defun play-wav (pathname)
-  (sdl2-mixer:open-audio sdl2-ffi:+mix-default-frequency+ sdl2-ffi:+mix-default-format+ 2 4096)
-  (sdl2-mixer:play-channel -1 (sdl2-mixer:load-wav pathname) 0))
+(defun mix-play (pathname &optional (loops 0))
+  (if (string= (str:downcase (pathname-type pathname)) "wav")
+      (progn (sdl2-mixer:open-audio sdl2-ffi:+mix-default-frequency+ sdl2-ffi:+mix-default-format+ 2 4096)
+             (sdl2-mixer:play-channel -1 (sdl2-mixer:load-wav pathname) loops))
+      (format t "Only WAV supported, try sdl2-mixer.")))
+
+(defun mix-halt ()
+  (sdl2-mixer:halt-channel -1))
+
+(defun mix-is-playing ()
+  (not (= 0 (sdl2-mixer:playing -1))))
 
 
 #+linux (calm::load-canvas)

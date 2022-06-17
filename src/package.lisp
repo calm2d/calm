@@ -3,7 +3,9 @@
   (:local-nicknames
    (:c :cl-cairo2))
   (:export
-   :play-wav
+   :mix-play
+   :mix-halt
+   :mix-is-playing
    :set-cursor))
 
 (defpackage :calm
