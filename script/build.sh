@@ -65,19 +65,21 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Copy dependencies ..."
         cp /usr/lib/x86_64-linux-gnu/libSDL2*.so* .
         cp /usr/lib/x86_64-linux-gnu/libcairo*.so* .
+        # copy all the DLLs required by SDL2 & cairo
+        ldd ./*.so* | grep '=> /lib/x86_64-linux-gnu' | awk '{print $3}' | sort | uniq | xargs -I _ cp _ .
+        rm libc.so*
     elif [[ "$DISTRO" == "Fedora"* ]]; then
         sudo dnf install git SDL2 SDL2_mixer cairo -y
         echo "Copy dependencies ..."
         cp /usr/lib64/libSDL2*.so* .
         cp /usr/lib64/libcairo*.so* .
+        # copy all the DLLs required by SDL2 & cairo
+        ldd ./*.so* | grep '=> /lib64' | awk '{print $3}' | sort | uniq | xargs -I _ cp _ .
+        rm libc.so*
     else
         echo "Unsupported DISTRO. Please install dependencies by yourself and modify this script."
         exit 42
     fi
-
-    # copy all the DLLs required by SDL2 & cairo
-    ldd ./*.so* | grep '=> /lib64' | awk '{print $3}' | sort | uniq | xargs -I _ cp _ .
-    rm libc.so*
 
     ls -lah ./
 
