@@ -37,6 +37,7 @@
 (defun on-keydown (key) (declare (ignore key)))
 (defun on-keyup (key) (declare (ignore key)))
 (defun on-mousewheel (x y direction) (declare (ignore x y direction)))
+(defun on-mousemotion (&key button x y) (declare (ignore x y)))
 (defun on-mousebuttonup (&key button x y clicks) (declare (ignore button x y clicks)))
 (defun on-mousebuttondown (&key button x y clicks) (declare (ignore button x y clicks)))
 
@@ -79,6 +80,7 @@
                          ;; (format t "Mouse Motion EVENT: X:~A Y:~A ~%" x y)
                          (setf *calm-mouse-x* x
                                *calm-mouse-y* y)
+                         (on-mousemotion :x x :y y)
                          ;; (redraw)
                          )
            (:mousebuttonup (:button button :x x :y y :clicks clicks)
