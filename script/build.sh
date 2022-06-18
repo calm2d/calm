@@ -61,21 +61,23 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     echo "Installing dependencies ..."
     if [[ "$DISTRO" == "Ubuntu"* ]]; then
-        sudo apt install git libsdl2-2.0-0 libsdl2-mixer-2.0-0  libcairo2 -y
+        sudo apt install sbcl git libsdl2-2.0-0 libsdl2-mixer-2.0-0  libcairo2 -y
         echo "Copy dependencies ..."
         cp /usr/lib/x86_64-linux-gnu/libSDL2*.so* .
         cp /usr/lib/x86_64-linux-gnu/libcairo*.so* .
         # copy all the DLLs required by SDL2 & cairo
         ldd ./*.so* | grep '=> /lib/x86_64-linux-gnu' | awk '{print $3}' | sort | uniq | xargs -I _ cp _ .
         rm libc.so*
+        rm libpthread.so*
     elif [[ "$DISTRO" == "Fedora"* ]]; then
-        sudo dnf install git SDL2 SDL2_mixer cairo -y
+        sudo dnf install sbcl git SDL2 SDL2_mixer cairo -y
         echo "Copy dependencies ..."
         cp /usr/lib64/libSDL2*.so* .
         cp /usr/lib64/libcairo*.so* .
         # copy all the DLLs required by SDL2 & cairo
         ldd ./*.so* | grep '=> /lib64' | awk '{print $3}' | sort | uniq | xargs -I _ cp _ .
         rm libc.so*
+        rm libstdc++.so*
     else
         echo "Unsupported DISTRO. Please install dependencies by yourself and modify this script."
         exit 42
@@ -103,7 +105,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     echo "Installing dependencies ..."
-    brew install git coreutils sdl2 sdl2_mixer cairo
+    brew install sbcl git coreutils sdl2 sdl2_mixer cairo
 
     # link them, in case of they were unlinked before
     brew link sdl2 sdl2_mixer cairo

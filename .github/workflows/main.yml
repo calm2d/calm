@@ -21,20 +21,20 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install SBCL
-        run: sudo apt install sbcl -y
+      # - name: Install SBCL
+      #   run: sudo apt install sbcl -y
 
       - name: Build CALM
         run: |
           chmod +x ./script/build.sh
-          ./script/build.sh
+          docker run --rm -v ${PWD}:/calm -w /calm --name fedora-build fedora bash ./script/build.sh
           7z a -t7z -mx=9 -mfb=273 -ms -md=32m -myx=9 -mtm=- -mmt -mmtf -mmf=bt3 -mmc=10000 -mpb=0 -mlc=0 calm-lnx.7z ./build/calm/
           ls -lah .
       - name: GH Release
         uses: softprops/action-gh-release@v0.1.14
         with:
           files: |
-            calm-lnx.7z  
+            calm-lnx.7z
   mac-build:
     # The type of runner that the job will run on
     runs-on: macos-latest
