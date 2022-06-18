@@ -28,6 +28,7 @@ jobs:
         run: |
           chmod +x ./script/build.sh
           docker run --rm -v ${PWD}:/calm -w /calm --name fedora-build fedora bash ./script/build.sh
+          sudo chown ${USER:=$(/usr/bin/id -run)}:$USER ./build/calm/
           7z a -t7z -mx=9 -mfb=273 -ms -md=32m -myx=9 -mtm=- -mmt -mmtf -mmf=bt3 -mmc=10000 -mpb=0 -mlc=0 calm-lnx.7z ./build/calm/
           ls -lah .
       - name: GH Release
