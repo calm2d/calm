@@ -9,7 +9,7 @@
 
 (defparameter *calm-drawing* t)
 
-(defparameter *calm-debuging* nil)
+(defparameter *calm-debugging* nil)
 (defparameter *calm-frame-delay* 15)
 (defparameter *calm-width* 600)
 (defparameter *calm-height* 500)
@@ -102,7 +102,7 @@
                            (redraw))
            (:idle ()
                   (when (or *calm-drawing* (draw?))
-                    (when *calm-debuging*
+                    (when *calm-debugging*
                       (format t "Canvas Redraw, SDL Tick: ... ~A.~%" (sdl2:get-ticks)))
                     (setf *calm-drawing* nil)
                     (multiple-value-bind (*calm-renderer-width* *calm-renderer-height*)
