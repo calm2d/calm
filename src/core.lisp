@@ -31,6 +31,13 @@
 (defparameter *calm-mouse-x* 0)
 (defparameter *calm-mouse-y* 0)
 
+(defun calm-quit ()
+  ;; on some Linux, uiop:quit will hang a while, don't know why
+  #+linux
+  (sb-ext:quit :recklessly-p t)
+  #-linux
+  (uiop:quit))
+
 (defun draw? () nil)
 (defun draw ())
 (defun on-textinput (text) (declare (ignore text)))
@@ -50,7 +57,7 @@
      (sdl2:with-window (*calm-window* :title ,title :x ,x :y ,y :w ,w :h ,h :flags ,flags)
        (sdl2:with-renderer (*calm-renderer* *calm-window*)
          (sdl2:with-event-loop (:method :poll)
-           (:quit () (uiop:quit))
+           (:quit () (calm-quit))
            (:mousewheel (:x x :y y :direction direction)
                         (on-mousewheel x y direction)
                        (redraw))
@@ -75,7 +82,9 @@
                                ((equal e sdl2-ffi:+sdl-windowevent-enter+)
                                 (setf *calm-status-mouse-inside-window* t) (redraw))
                                ((equal e sdl2-ffi:+sdl-windowevent-leave+)
-                                (setf *calm-status-mouse-inside-window* nil) (redraw))))
+                                (setf *calm-status-mouse-inside-window* nil) (redraw))
+                               ((equal e sdl2-ffi:+sdl-windowevent-close+)
+                                (calm-quit))))
            (:mousemotion (:x x :y y)
                          ;; (format t "Mouse Motion EVENT: X:~A Y:~A ~%" x y)
                          (setf *calm-mouse-x* x
@@ -214,7 +223,7 @@
 
   (when (uiop:getenv "CI")
     (format t "Running in CI Environment, quit without showing GUI.~%")
-    (uiop:quit)))
+    (calm-quit)))
 
 (defun load-canvas ()
   (let ((user-dir (uiop:getenv "USER_DIR")))
