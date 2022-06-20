@@ -219,7 +219,19 @@
     (c:show-text "DON'T PANIC")
     (c:move-to 320 250)
     (c:set-font-size 18)
-    (c:show-text "READ THE GUIDE"))
+    (c:show-text "READ THE GUIDE")
+    (defun on-mousebuttonup (&key button x y clicks)
+      (declare (ignore button x y clicks))
+      #+darwin
+      (uiop:run-program "open https://calm2d.github.io/")
+      #+linux
+      (uiop:run-program "xdg-open https://calm2d.github.io/")
+      #+win32
+      (uiop:run-program "start https://calm2d.github.io/")
+      )
+    (u:set-cursor :hand)
+    )
+
 
   (when (uiop:getenv "CI")
     (format t "Running in CI Environment, quit without showing GUI.~%")
