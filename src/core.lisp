@@ -32,10 +32,11 @@
 (defparameter *calm-mouse-y* 0)
 
 (defun calm-quit ()
-  ;; on some Linux, uiop:quit will hang a while, don't know why
-  #+linux
+  ;; on Linux & Windows, uiop:quit will hang a while
+  ;; don't know why, fix it recklessly.
+  #-darwin
   (sb-ext:quit :recklessly-p t)
-  #-linux
+  #+darwin
   (uiop:quit))
 
 (defun draw? () nil)
