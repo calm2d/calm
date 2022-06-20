@@ -7,8 +7,7 @@
   (c:set-source-rgb 0 0 0)
   (c:rectangle x y w h)
   (c:stroke-preserve)
-  (apply #'c:set-source-rgb
-         (nth (if color (1+ (random 3)) 0) *mondrian-color-list*))
+  (apply #'c:set-source-rgb (nth (if color (1+ (random 3)) 0) *mondrian-color-list*))
   (c:fill-path))
 
 (defun draw ()
