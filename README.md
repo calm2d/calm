@@ -5,10 +5,4 @@
 ![calm](./calm.png)
 
 
-[Download](https://github.com/calm2d/calm/releases/latest) (**L**i**n**u**x** | **Win**dows | **mac**OS), [Extract](https://www.7-zip.org), and Browse the gallery:
-
-```bash
-export PATH="~/Downloads/calm/:$PATH"
-cd ~/Downloads/calm/gallery/meditator/
-calm
-```
+Calm down, and read the [GUIDE](https://calm2d.github.io/).
