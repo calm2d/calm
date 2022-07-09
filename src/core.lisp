@@ -224,11 +224,11 @@
     (defun on-mousebuttonup (&key button x y clicks)
       (declare (ignore button x y clicks))
       #+darwin
-      (uiop:run-program "open https://calm2d.github.io/")
+      (uiop:run-program "open https://calm2d.org/guide/")
       #+linux
-      (uiop:run-program "xdg-open https://calm2d.github.io/")
+      (uiop:run-program "xdg-open https://calm2d.org/guide/")
       #+win32
-      (uiop:run-program "start https://calm2d.github.io/")
+      (uiop:run-program "start https://calm2d.org/guide/")
       )
     (u:set-cursor :hand)
     )
