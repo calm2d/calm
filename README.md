@@ -5,4 +5,4 @@
 ![calm](./calm.png)
 
 
-Calm down, and read the [GUIDE](https://calm2d.github.io/).
+Calm down, and read the [GUIDE](https://calm2d.org/guide/).
